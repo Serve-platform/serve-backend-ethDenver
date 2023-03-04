@@ -24,7 +24,11 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
       charset: 'utf8mb4',
       extra: {
         connectionLimit: 50,
+        ssl: {
+          rejectUnauthorized: true,
+        },
       },
+      ssl: true,
     };
   }
 }

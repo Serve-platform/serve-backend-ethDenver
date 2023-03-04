@@ -1,8 +1,8 @@
-import { Controller, Get, Param, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiParam } from "@nestjs/swagger";
-import { ApiImplicitQuery } from "@nestjs/swagger/dist/decorators/api-implicit-query.decorator";
-import { UserIdInput } from "./dtos/user.dto";
+import { ApiParam } from '@nestjs/swagger';
+import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
+import { UserIdInput } from './dtos/user.dto';
 
 @Controller('users')
 export class UserController {
@@ -21,5 +21,15 @@ export class UserController {
     @Param() { userId }: UserIdInput,
   ) {
     console.log(userId);
+  }
+  // post user by firebase
+  @Post()
+  async postUserByFirebase(@Res() response, @Body() user) {
+    return await this.userService.postUserByFirebase(response, user);
+  }
+
+  @Post()
+  async postLoginByFirebase(@Res() response, @Body() user) {
+    return await this.userService.postLoginByFirebase(response, user);
   }
 }
