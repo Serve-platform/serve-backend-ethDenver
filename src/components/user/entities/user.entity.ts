@@ -16,6 +16,7 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Trade } from '../../trade/entities/trade.entity';
+import { Seat } from '../../../seat/entities/seat.entity';
 
 @Entity('User')
 export class User {
@@ -105,4 +106,12 @@ export class User {
 
   @OneToMany(() => Trade, (trade) => trade.id)
   resUser: Array<Trade>;
+
+  /**
+   * 혼돈
+   */
+  @OneToMany(() => Seat, (seat) => seat.user,{
+    eager: true
+  })
+  seats: Seat[];
 }

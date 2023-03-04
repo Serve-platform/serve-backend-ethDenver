@@ -29,6 +29,8 @@ export class TradeService {
 
   async findTradeByUser (uuid: string[]) {
     const result = await this.userRepository.findByIds(uuid);
-    return result;
+    return {
+      result: result
+    };
   }
 }

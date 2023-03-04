@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './core/config/typeorm.config';
 import { AppController } from './components/sample/app.controller';
 import { TradeModule } from './components/trade/trade.module';
+import { SeatModule } from './seat/seat.module';
+import { WalletAddressModule } from './wallet-address/wallet-address.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { TradeModule } from './components/trade/trade.module';
     }),
     UserModule,
     TradeModule,
+    SeatModule,
+    WalletAddressModule
   ],
   controllers: [AppController],
   providers: [],

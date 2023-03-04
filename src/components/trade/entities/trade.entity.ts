@@ -10,6 +10,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { User } from '../../user/entities/user.entity';
 import { CoreEntity } from '../../../core/common/entities/core.entity';
+import { Seat } from '../../../seat/entities/seat.entity';
 
 @Entity('Trade')
 export class Trade extends CoreEntity {
