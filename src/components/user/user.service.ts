@@ -1,60 +1,63 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './repositories/user.repository';
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-const firebaseConfig = {
-  apiKey: `asdgadsg`,
-};
-const app = initializeApp(firebaseConfig);
-// Initialize Firebase Authentication and get a reference to the service
-const auth = getAuth(app);
+import { User } from './entities/user.entity';
+import { v4 } from 'uuid';
+import { JwtService } from '@nestjs/jwt';
+import { LoginType, UserParams } from './dtos/params/user.params';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(
+    private readonly userRepo: UserRepository,
+    private jwtService: JwtService,
+  ) {}
 
   async getUsers() {
     const users = await this.userRepo.createQueryBuilder().getMany();
     return users;
   }
 
-  async postUserByFirebase(response, user) {
-    const post = user.body;
-    const email = post['new_email'];
-    const password1 = post['new_pw_1'];
-    const password2 = post['new_pw_2'];
-
-    if (password1 != password2) {
-      response.send('확인 비밀번호 다름');
-    } else {
-      createUserWithEmailAndPassword(auth, email, password1)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          response.send('로그인 완료');
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          response.send(error.code);
-        });
+  async postUser(req, res, _user: UserParams) {
+    console.log(_user);
+    const find = await this.userRepo.find({ kakaoUUID: _user.kakaoUUID });
+    console.log(find);
+    if (find.length > 0) {
+      return res.status(400).json({ message: '이미 존재하는 이메일입니다.' });
     }
-    return Promise.resolve(undefined);
+    const user = new User();
+    user.uuid = v4();
+    user.kakaoUUID = _user.kakaoUUID;
+    user.nickName = _user.nickName;
+    const result = await this.userRepo.save(user);
+    console.log(result);
+    const token = await this.createJwtToken(result);
+    return res
+      .status(200)
+      .json({ message: '회원가입이 완료되었습니다.', token });
   }
 
-  async postLoginByFirebase(response: Response, user) {
-    const post = user.body;
-    const email = post['new_email'];
-    const password = post['new_pw_1'];
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        return Promise.resolve(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        return Promise.resolve(errorCode);
-      });
+  async postLogin(req, res, _user: UserParams) {
+    console.log(_user);
+    if (_user.loginType === LoginType.KAKAO) {
+      // lgoinByKakao
+      const find = await this.userRepo.find({ kakaoUUID: _user.kakaoUUID });
+      console.log(find);
+      if (find.length === 0) {
+        return res.status(400).json({ message: '존재하지 않는 계정입니다.' });
+      }
+      const token = await this.createJwtToken(find[0]);
+      return res.status(200).json({ message: '로그인 되었습니다.', token });
+    }
+    return res.status(400).json({ message: '로그인 실패' });
+  }
+
+  private async createJwtToken(user: User) {
+    const payload = {
+      uuid: user.uuid,
+      nickName: user.nickName,
+    };
+    return this.jwtService.sign(payload, {
+      secret: `${process.env.JWT_SECRET}`,
+    });
   }
 }

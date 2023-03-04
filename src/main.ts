@@ -11,7 +11,7 @@ async function bootstrap() {
   const serverPort = configService.get('serverPort');
   const nodeEnv = configService.get('nodeEnv');
   app.setGlobalPrefix('api');
-
+  app.enableCors();
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
