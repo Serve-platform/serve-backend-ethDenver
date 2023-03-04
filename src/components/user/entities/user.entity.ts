@@ -15,6 +15,7 @@ import {
   IsString,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Trade } from '../../trade/entities/trade.entity';
 
 @Entity('User')
 export class User {
@@ -93,4 +94,10 @@ export class User {
   @ApiProperty({ example: '' })
   @IsString()
   kakaoUUID: string;
+
+  @OneToMany(() => Trade, (trade) => trade.id)
+  reqUser: Array<Trade>;
+
+  @OneToMany(() => Trade, (trade) => trade.id)
+  resUser: Array<Trade>;
 }

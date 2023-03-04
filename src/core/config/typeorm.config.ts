@@ -22,13 +22,7 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
       timezone: 'Z',
       logging: false,
       charset: 'utf8mb4',
-      extra: {
-        connectionLimit: 50,
-        ssl: {
-          rejectUnauthorized: true,
-        },
-      },
-      ssl: true,
+      ssl: false,
     };
   }
 }

@@ -60,4 +60,8 @@ export class UserService {
       secret: `${process.env.JWT_SECRET}`,
     });
   }
+
+  async getUsersByUuid(uuid: string) {
+    return this.userRepo.findByIds([uuid]);
+  }
 }
