@@ -11,7 +11,7 @@ import { TrainRepository } from '../train/repository/TrainRepository';
 import { UserService } from '../components/user/user.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeatRepository, TrainRepository, UserRepository, UserRepository]),
+  imports: [TypeOrmModule.forFeature([SeatRepository, TrainRepository, UserRepository]),
     JwtModule, AuthInfo],
   controllers: [SeatController],
   providers: [SeatService, AuthInfo, UserService]

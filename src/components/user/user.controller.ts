@@ -33,14 +33,26 @@ export class UserController {
         console.log(train.result[0]);
         const trainObj = train.result[0];
         datum.locationinfo = trainObj.trainLine + ' ' + trainObj.doorNumber + '번 주변';
-        // trainLocation: '서울',
-        //   trainLine: '구남규호선',
-        //   trainUuid: '1st',
-        //   doorNumber: '1',
-
       }
       return {data};
     }
+  }
+
+  @Get()
+  async checkWalet(@Query('uuid') uuid: string) {
+    const data = await this.userService.getUsersByUuid(uuid);
+    for (const datum of data) {
+      const seat = datum.ownerSeat[0];
+      datum.locationinfo = '';
+      if(seat == null) {
+        continue;
+      };
+      const train = await this.trainService.findOne(+(seat.train+""));
+      console.log(train.result[0]);
+      const trainObj = train.result[0];
+      datum.locationinfo = trainObj.trainLine + ' ' + trainObj.doorNumber + '번 주변';
+    }
+    return {data};
   }
 
   @Get('/deploy')

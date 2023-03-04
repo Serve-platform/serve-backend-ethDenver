@@ -17,6 +17,7 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Trade } from '../../trade/entities/trade.entity';
 import { Seat } from '../../../seat/entities/seat.entity';
+import { WalletAddress } from '../../../wallet-address/entities/wallet-address.entity';
 
 @Entity('User')
 export class User {
@@ -123,4 +124,10 @@ export class User {
   bookUserSeat: Seat[];
 
   locationinfo: string;
+
+
+  @OneToMany(() => WalletAddress, (wallet) => wallet.userId,{
+    eager: true
+  })
+  walletAddresses: WalletAddress[];
 }
