@@ -38,21 +38,19 @@ export class UserController {
     }
   }
 
-  @Get()
+  @Get("check")
   async checkWalet(@Query('uuid') uuid: string) {
+    let result = false;
     const data = await this.userService.getUsersByUuid(uuid);
     for (const datum of data) {
-      const seat = datum.ownerSeat[0];
-      datum.locationinfo = '';
-      if(seat == null) {
-        continue;
-      };
-      const train = await this.trainService.findOne(+(seat.train+""));
-      console.log(train.result[0]);
-      const trainObj = train.result[0];
-      datum.locationinfo = trainObj.trainLine + ' ' + trainObj.doorNumber + '번 주변';
+      if(datum.walletAddresses.length != 0) {
+        result = true;
+        break;
+      }
     }
-    return {data};
+    return {
+      result: result
+    };
   }
 
   @Get('/deploy')

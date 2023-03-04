@@ -1,5 +1,5 @@
 export class CreateWalletAddressDto {
-  msghash: string
+  msg: string
   v: string
   r: string
   s: string
