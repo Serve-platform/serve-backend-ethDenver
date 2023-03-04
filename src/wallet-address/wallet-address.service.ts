@@ -5,6 +5,7 @@ import { UpdateWalletAddressDto } from './dto/update-wallet-address.dto';
 @Injectable()
 export class WalletAddressService {
   create(createWalletAddressDto: CreateWalletAddressDto) {
+    //회원 정보 가지고와서 월렛 Update
     return 'This action adds a new walletAddress';
   }
 

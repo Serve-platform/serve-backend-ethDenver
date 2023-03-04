@@ -8,6 +8,7 @@ import { AppController } from './components/sample/app.controller';
 import { TradeModule } from './components/trade/trade.module';
 import { SeatModule } from './seat/seat.module';
 import { WalletAddressModule } from './wallet-address/wallet-address.module';
+import { TrainModule } from './train/train.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { WalletAddressModule } from './wallet-address/wallet-address.module';
     UserModule,
     TradeModule,
     SeatModule,
-    WalletAddressModule
+    WalletAddressModule,
+    TrainModule
   ],
   controllers: [AppController],
   providers: [],

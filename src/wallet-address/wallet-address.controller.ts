@@ -3,6 +3,9 @@ import { WalletAddressService } from './wallet-address.service';
 import { CreateWalletAddressDto } from './dto/create-wallet-address.dto';
 import { UpdateWalletAddressDto } from './dto/update-wallet-address.dto';
 
+/**
+ * @todo 준호햄 로직처리
+ */
 @Controller('wallet-address')
 export class WalletAddressController {
   constructor(private readonly walletAddressService: WalletAddressService) {}

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, Res, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiParam } from '@nestjs/swagger';
 import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
@@ -8,7 +8,9 @@ import { join } from 'path';
 import { deploy } from '../../ton/deploy';
 import * as QRCode from 'qrcode';
 import * as base64ToImage from 'base64-to-image';
+import { LoggingInterceptor } from '../../auth/login-interceptor';
 
+// @UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}

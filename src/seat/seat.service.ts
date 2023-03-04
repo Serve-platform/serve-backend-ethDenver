@@ -4,16 +4,19 @@ import { UpdateSeatDto } from './dto/update-seat.dto';
 import { TradeRepository } from '../components/trade/repositories/trade.repository';
 import { UserRepository } from '../components/user/repositories/user.repository';
 import { SeatRepository } from './repository/SeatRepository';
+import { Seat } from './entities/seat.entity';
 
 @Injectable()
 export class SeatService {
   constructor(private readonly seatRepository: SeatRepository) {}
-  create(createSeatDto: CreateSeatDto) {
-    return 'This action adds a new seat';
+  async create(createSeatDto: CreateSeatDto) {
+    const result = await this.seatRepository.save(createSeatDto);
+    return result;
   }
 
-  findAll() {
-    return `This action returns all seat`;
+  async findAll() {
+    const result = await this.seatRepository.find()
+    return result;
   }
 
   findOne(id: number) {
