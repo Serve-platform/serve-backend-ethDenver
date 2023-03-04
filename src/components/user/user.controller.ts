@@ -7,11 +7,13 @@ import { deploy } from '../../ton/deploy';
 import * as QRCode from 'qrcode';
 import { TrainService } from '../../train/train.service';
 import { Train } from '../../train/entities/train.entity';
-
-// @UseInterceptors(LoggingInterceptor)
+import { AuthInfo } from '../../auth/auth-info';
+import { LoggingInterceptor } from '../../auth/login-interceptor';
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService, private readonly trainService: TrainService) {}
+  constructor(private readonly userService: UserService,
+              private readonly trainService: TrainService,
+              private readonly authInfo: AuthInfo,) {}
 
   @Get()
   async getUsers(@Query('uuid') uuid: string) {
@@ -47,15 +49,19 @@ export class UserController {
   }
 
   @Get('/createQr')
+  @UseInterceptors(LoggingInterceptor)
   async createQr(
     @Param() address: string,
     @Param() balance: string,
     @Res() res,
   ) {
+    const nickName = this.authInfo.userInfo.nickName;
     const paramStr = JSON.stringify({
       address: address,
       balance: balance,
+      nickName: nickName
     });
+    console.log(paramStr);
     const result = await QRCode.toDataURL(paramStr);
     // base64ToImage(result, './', { fileName: 'test' });
     // response image to client

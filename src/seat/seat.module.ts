@@ -8,11 +8,12 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { SeatRepository } from './repository/SeatRepository';
 import { AuthInfo } from '../auth/auth-info';
 import { TrainRepository } from '../train/repository/TrainRepository';
+import { UserService } from '../components/user/user.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeatRepository, TrainRepository, UserRepository]),
+  imports: [TypeOrmModule.forFeature([SeatRepository, TrainRepository, UserRepository, UserRepository]),
     JwtModule, AuthInfo],
   controllers: [SeatController],
-  providers: [SeatService, AuthInfo]
+  providers: [SeatService, AuthInfo, UserService]
 })
 export class SeatModule {}

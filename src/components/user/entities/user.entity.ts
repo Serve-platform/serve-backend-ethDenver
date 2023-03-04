@@ -96,6 +96,11 @@ export class User {
   @IsString()
   kakaoUUID: string;
 
+  @Column({ comment: '지갑주소', nullable: true })
+  @ApiProperty({ example: '' })
+  @IsString()
+  walletAddr: string;
+
   @Column({ comment: '지갑ID', nullable: true })
   @ApiProperty({ example: '' })
   @IsString()

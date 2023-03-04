@@ -23,7 +23,7 @@ export class LoggingInterceptor implements NestInterceptor {
     const authHeader = request.headers.authorization;
     console.log(authHeader)
     const token = authHeader.split(' ')[1];
-    console.log(token);
+    // console.log(token);
     try {
       var result = this.jwtService.verify(token, {
         secret: `${process.env.JWT_SECRET}`,
@@ -37,7 +37,7 @@ export class LoggingInterceptor implements NestInterceptor {
       };
       return throwError(errorResponse);
     }
-    console.log(result);
+    // console.log(result);
     this.authInfo.userInfo = this.jwtService.decode(token);
     return next.handle();
   }

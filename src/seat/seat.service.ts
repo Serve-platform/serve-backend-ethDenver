@@ -7,6 +7,7 @@ import { SeatRepository } from './repository/SeatRepository';
 import { Seat } from './entities/seat.entity';
 import { TrainRepository } from '../train/repository/TrainRepository';
 import { AuthInfo } from '../auth/auth-info';
+import { User } from '../components/user/entities/user.entity';
 
 @Injectable()
 export class SeatService {
@@ -96,5 +97,9 @@ export class SeatService {
 
   remove(id: number) {
     return `This action removes a #${id} seat`;
+  }
+
+  async findByOwner (user1: User) {
+    return await this.seatRepository.findByOwner(user1.uuid);
   }
 }

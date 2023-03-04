@@ -39,7 +39,7 @@ export class TradeService {
         continue;
       };
       const train = await this.trainRepository.findByIds([+(seat.train+"")]);
-      console.log(train[0]);
+      // console.log(train[0]);
       const trainObj = train[0];
       user.locationinfo = trainObj.trainLine + ' ' + trainObj.doorNumber + '번 주변';
     }
