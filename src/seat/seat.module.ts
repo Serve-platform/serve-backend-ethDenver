@@ -4,12 +4,14 @@ import { SeatController } from './seat.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TradeRepository } from '../components/trade/repositories/trade.repository';
 import { UserRepository } from '../components/user/repositories/user.repository';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { SeatRepository } from './repository/SeatRepository';
+import { AuthInfo } from '../auth/auth-info';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeatRepository]), JwtModule],
+  imports: [TypeOrmModule.forFeature([SeatRepository]),
+    JwtModule, AuthInfo],
   controllers: [SeatController],
-  providers: [SeatService]
+  providers: [SeatService, AuthInfo]
 })
 export class SeatModule {}

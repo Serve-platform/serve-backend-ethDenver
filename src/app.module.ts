@@ -9,6 +9,9 @@ import { TradeModule } from './components/trade/trade.module';
 import { SeatModule } from './seat/seat.module';
 import { WalletAddressModule } from './wallet-address/wallet-address.module';
 import { TrainModule } from './train/train.module';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { LoggingInterceptor } from './auth/login-interceptor';
+import { AuthInfo } from './auth/auth-info';
 
 @Module({
   imports: [
@@ -24,9 +27,10 @@ import { TrainModule } from './train/train.module';
     TradeModule,
     SeatModule,
     WalletAddressModule,
-    TrainModule
+    TrainModule,
+    JwtModule
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [LoggingInterceptor, AuthInfo],
 })
 export class AppModule {}
