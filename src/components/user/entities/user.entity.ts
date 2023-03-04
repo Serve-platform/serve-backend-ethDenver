@@ -95,6 +95,11 @@ export class User {
   @IsString()
   kakaoUUID: string;
 
+  @Column({ comment: '지갑ID', nullable: true })
+  @ApiProperty({ example: '' })
+  @IsString()
+  walletUUID: string;
+
   @OneToMany(() => Trade, (trade) => trade.id)
   reqUser: Array<Trade>;
 

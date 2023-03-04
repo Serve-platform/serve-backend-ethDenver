@@ -18,7 +18,7 @@ import { TradeModule } from './components/trade/trade.module';
       useClass: TypeOrmConfig,
     }),
     UserModule,
-    // TradeModule,
+    TradeModule,
   ],
   controllers: [AppController],
   providers: [],

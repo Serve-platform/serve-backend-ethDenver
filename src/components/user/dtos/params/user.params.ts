@@ -5,11 +5,10 @@ export class UserParams {
   nickName: string;
   switchLevel: string;
   image: string;
-  walletId: string;
+  authUuid: string;
   walletImg: string;
   concesHist: string;
   transAcc: string;
-  kakaoUUID: string;
   loginType: LoginType;
 }
 

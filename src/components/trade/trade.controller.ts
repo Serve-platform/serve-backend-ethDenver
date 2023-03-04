@@ -17,6 +17,11 @@ export class TradeController {
     return this.tradeService.findAll();
   }
 
+  @Post('user')
+  findTradeByUser(@Body('uuid') uuid: any) {
+    return this.tradeService.findTradeByUser(uuid);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tradeService.findOne(+id);

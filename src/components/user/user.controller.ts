@@ -17,9 +17,11 @@ export class UserController {
   async getUsers(@Query('uuid') uuid: string) {
     console.log(uuid);
     if (uuid === undefined) {
-      return await this.userService.getUsers();
+      const data = await this.userService.getUsers();
+      return {data};
     } else {
-      return await this.userService.getUsersByUuid(uuid);
+      const data = await this.userService.getUsersByUuid(uuid);
+      return {data};
     }
   }
 

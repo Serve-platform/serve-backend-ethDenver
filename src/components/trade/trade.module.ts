@@ -7,7 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TradeRepository } from './repositories/trade.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TradeRepository]), JwtModule],
+  imports: [TypeOrmModule.forFeature([TradeRepository, UserRepository]), JwtModule],
   controllers: [TradeController],
   providers: [TradeService],
 })
