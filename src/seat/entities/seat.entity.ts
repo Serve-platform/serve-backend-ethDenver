@@ -6,13 +6,28 @@ import { Train } from '../../train/entities/train.entity';
 
 @Entity('Seat')
 export class Seat extends CoreEntity {
+  /**
+   * 좌석에 대한 주인
+   */
   @JoinColumn({
-    name: 'uuid',
+    name: 'owner',
   })
   @ManyToOne(() => User, (user) => user.uuid)
-  user: User;
-  @RelationId((seat: Seat) => seat.user)
-  private uuid: User;
+  ownerId: User;
+  @RelationId((seat: Seat) => seat.ownerId)
+  owner: User;
+
+  /**
+   * 좌석 구매 신청자
+   */
+  @JoinColumn({
+    name: 'bookUser',
+  })
+  @ManyToOne(() => User, (user) => user.uuid)
+  bookUserId: User;
+  @RelationId((seat: Seat) => seat.bookUserId)
+  bookUser: User;
+
   // 좌석 번호
   @Column()
   seatNumber: string;
@@ -24,7 +39,7 @@ export class Seat extends CoreEntity {
     name: 'trainId',
   })
   @ManyToOne(() => Train, (train) => train.id)
+  trainId: Train;
+  @RelationId((seat: Seat) => seat.trainId)
   train: Train;
-  @RelationId((seat: Seat) => seat.train)
-  private trainUuid: User;
 }

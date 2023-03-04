@@ -3,17 +3,15 @@ import { UserService } from './user.service';
 import { ApiParam } from '@nestjs/swagger';
 import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
 import { UserIdInput } from './dtos/user.dto';
-import { User } from './entities/user.entity';
-import { join } from 'path';
 import { deploy } from '../../ton/deploy';
 import * as QRCode from 'qrcode';
-import * as base64ToImage from 'base64-to-image';
-import { LoggingInterceptor } from '../../auth/login-interceptor';
+import { TrainService } from '../../train/train.service';
+import { Train } from '../../train/entities/train.entity';
 
 // @UseInterceptors(LoggingInterceptor)
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly trainService: TrainService) {}
 
   @Get()
   async getUsers(@Query('uuid') uuid: string) {
@@ -23,6 +21,22 @@ export class UserController {
       return {data};
     } else {
       const data = await this.userService.getUsersByUuid(uuid);
+      for (const datum of data) {
+        const seat = datum.ownerSeat[0];
+        datum.locationinfo = '';
+        if(seat == null) {
+          continue;
+        };
+        const train = await this.trainService.findOne(+(seat.train+""));
+        console.log(train.result[0]);
+        const trainObj = train.result[0];
+        datum.locationinfo = trainObj.trainLine + ' ' + trainObj.doorNumber + '번 주변';
+        // trainLocation: '서울',
+        //   trainLine: '구남규호선',
+        //   trainUuid: '1st',
+        //   doorNumber: '1',
+
+      }
       return {data};
     }
   }

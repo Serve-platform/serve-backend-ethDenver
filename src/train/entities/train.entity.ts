@@ -19,7 +19,7 @@ export class Train extends CoreEntity {
   // 탑승 지하철 문 번호
   @Column()
   doorNumber: string;
-  @OneToMany(() => Seat, (seat) => seat.train,{
+  @OneToMany(() => Seat, (seat) => seat.trainId,{
     eager: true
   })
   seats: Array<Seat>;

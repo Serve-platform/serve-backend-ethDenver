@@ -107,11 +107,15 @@ export class User {
   @OneToMany(() => Trade, (trade) => trade.id)
   resUser: Array<Trade>;
 
-  /**
-   * 혼돈
-   */
-  @OneToMany(() => Seat, (seat) => seat.user,{
+  @OneToMany(() => Seat, (seat) => seat.ownerId,{
     eager: true
   })
-  seats: Seat[];
+  ownerSeat: Seat[];
+
+  @OneToMany(() => Seat, (seat) => seat.bookUserId,{
+    eager: true
+  })
+  bookUserSeat: Seat[];
+
+  locationinfo: string;
 }

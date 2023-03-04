@@ -30,6 +30,18 @@ export class SeatController {
     return this.seatService.update(+id, updateSeatDto);
   }
 
+  @Post('init')
+  init() {
+    console.log('asdgsagdasgadsgasdg')
+    for (let i = 0; i < 378; i++) {
+      console.log(i)
+      var p = new UpdateSeatDto();
+      p.state = 0;
+      this.seatService.initUpdate(i, p);
+    }
+    return 1;
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.seatService.remove(+id);
