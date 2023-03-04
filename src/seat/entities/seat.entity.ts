@@ -6,25 +6,25 @@ import { Train } from '../../train/entities/train.entity';
 
 @Entity('Seat')
 export class Seat extends CoreEntity {
-  /**
-   * 혼돈
-   */
   @JoinColumn({
     name: 'uuid',
   })
   @ManyToOne(() => User, (user) => user.uuid)
   user: User;
   @RelationId((seat: Seat) => seat.user)
-  uuid: User;
+  private uuid: User;
+  // 좌석 번호
   @Column()
-  location: string;
+  seatNumber: string;
+  // 좌석상태
   @Column()
-  trainLocation: string;
-  @Column()
-  trainUuid: string;
-  @Column()
-  doorNumber: string;
+  state: number;
 
-  @OneToMany(() => Train, (train) => train.id)
-  trains: Array<Train>;
+  @JoinColumn({
+    name: 'trainId',
+  })
+  @ManyToOne(() => Train, (train) => train.id)
+  train: Train;
+  @RelationId((seat: Seat) => seat.train)
+  private trainUuid: User;
 }

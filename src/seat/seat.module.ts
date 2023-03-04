@@ -7,9 +7,10 @@ import { UserRepository } from '../components/user/repositories/user.repository'
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { SeatRepository } from './repository/SeatRepository';
 import { AuthInfo } from '../auth/auth-info';
+import { TrainRepository } from '../train/repository/TrainRepository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SeatRepository]),
+  imports: [TypeOrmModule.forFeature([SeatRepository, TrainRepository, UserRepository]),
     JwtModule, AuthInfo],
   controllers: [SeatController],
   providers: [SeatService, AuthInfo]

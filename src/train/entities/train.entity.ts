@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, RelationId } from 'typeorm';
 import { CoreEntity } from '../../core/common/entities/core.entity';
 import { Seat } from '../../seat/entities/seat.entity';
 
@@ -7,10 +7,6 @@ export class Train extends CoreEntity {
   @JoinColumn({
     name: 'uuid',
   })
-  @ManyToOne(() => Seat, (seat) => seat.uuid)
-  seat: Seat;
-  @RelationId((train: Train) => train.seat)
-  uuid: Seat;
   // 탑승 지하철
   @Column()
   trainLocation: string;
@@ -23,6 +19,8 @@ export class Train extends CoreEntity {
   // 탑승 지하철 문 번호
   @Column()
   doorNumber: string;
-  @Column()
-  tradeType: string;
+  @OneToMany(() => Seat, (seat) => seat.train,{
+    eager: true
+  })
+  seats: Array<Seat>;
 }

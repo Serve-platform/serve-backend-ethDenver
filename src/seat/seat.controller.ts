@@ -4,15 +4,16 @@ import { CreateSeatDto } from './dto/create-seat.dto';
 import { UpdateSeatDto } from './dto/update-seat.dto';
 import { LoggingInterceptor } from '../auth/login-interceptor';
 
-// @UseInterceptors(LoggingInterceptor)
+@UseInterceptors(LoggingInterceptor)
 @Controller('seat')
 export class SeatController {
   constructor(private readonly seatService: SeatService) {}
 
-  @Post()
-  create(@Body() createSeatDto: CreateSeatDto) {
-    return this.seatService.create(createSeatDto);
-  }
+  // 위험해서 주석처리
+  // @Post()
+  // create() {
+  //   return this.seatService.create();
+  // }
 
   @Get()
   findAll() {

@@ -1,19 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTrainDto } from './dto/create-train.dto';
 import { UpdateTrainDto } from './dto/update-train.dto';
+import { TrainRepository } from './repository/TrainRepository';
+import { Train } from './entities/train.entity';
 
 @Injectable()
 export class TrainService {
-  create(createTrainDto: CreateTrainDto) {
-    return 'This action adds a new train';
+  constructor (private readonly trainRepository: TrainRepository) {
+  }
+  async create(createTrainDto: CreateTrainDto) {
+    let train = new Train();
+    train.trainLocation = createTrainDto.trainLocation;
+    train.trainLine = createTrainDto.trainLine;
+    train.trainUuid = createTrainDto.trainUuid;
+    train.doorNumber = createTrainDto.doorNumber;
+    const result = await this.trainRepository.save(train)
+    return result;
   }
 
-  findAll() {
-    return `This action returns all train`;
+  async findAll() {
+    const result = await this.trainRepository.find();
+    return { result };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} train`;
+  async findOne(id: number) {
+    const result = await this.trainRepository.findByIds([id]);
+    return { result };
   }
 
   update(id: number, updateTrainDto: UpdateTrainDto) {

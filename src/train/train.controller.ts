@@ -1,16 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { TrainService } from './train.service';
 import { CreateTrainDto } from './dto/create-train.dto';
 import { UpdateTrainDto } from './dto/update-train.dto';
+import { LoggingInterceptor } from '../auth/login-interceptor';
 
+@UseInterceptors(LoggingInterceptor)
 @Controller('train')
 export class TrainController {
   constructor(private readonly trainService: TrainService) {}
 
-  @Post()
-  create(@Body() createTrainDto: CreateTrainDto) {
-    return this.trainService.create(createTrainDto);
-  }
+
+  // 위험해서 주석처리
+  // @Post()
+  // create(@Body() createTrainDto: CreateTrainDto) {
+  //   return this.trainService.create(createTrainDto);
+  // }
 
   @Get()
   findAll() {

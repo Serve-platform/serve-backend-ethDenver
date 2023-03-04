@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { TradeService } from './trade.service';
 import { CreateTradeDto } from './dto/create-trade.dto';
 import { UpdateTradeDto } from './dto/update-trade.dto';
+import { LoggingInterceptor } from '../../auth/login-interceptor';
 
+@UseInterceptors(LoggingInterceptor)
 @Controller('trade')
 export class TradeController {
   constructor(private readonly tradeService: TradeService) {}
