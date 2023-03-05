@@ -71,3 +71,25 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+The env.dev file has the following properties.
+
+SERVER_PORT=3000
+
+DB_TYPE=mysql
+
+DB_HOST=
+
+DB_PORT=3306
+
+DB_USER_NAME=
+
+DB_PASSWORD=
+
+DB_NAME=
+
+DB_SYNCHRONIZE=true
+
+JWT_KEY=ethdenver
+
+
